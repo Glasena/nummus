@@ -1,12 +1,17 @@
 <script setup>
 
+import { RouterView } from 'vue-router';
 import Navbar from './components/Navbar.vue';
+import Toolbar from './components/Toolbar.vue';
 
 </script>
 
 <template>
-  <Navbar />
-  <h1>You did it!</h1>
+  <v-app>
+    <Navbar />
+    <Toolbar />
+    <v-main>
+      <RouterView />
+    </v-main>
+  </v-app>
 </template>
-
-<style scoped></style>
