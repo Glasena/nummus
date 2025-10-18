@@ -31,13 +31,24 @@ const dialActions = [
 </script>
 
 <template>
-    <v-app-bar :title="$t('appTitle')">
-        <v-btn class="mr-3" icon="mdi-dots-vertical" size="small" variant="elevated">
+    <v-app-bar>
+
+        <!-- Título principal -->
+        <v-toolbar-title>
+            {{ $t('appTitle') }}
+        </v-toolbar-title>
+
+        <!-- @todo tradução / selecionar apenas mês e ano -->
+        <v-date-input class="mr-4" max-width="250px" label="Date input" view-mode="months" variant="solo-filled"
+            hide-details="auto" display-format="monthAndYear" density="compact"></v-date-input>
+
+        <v-btn class="mr-4" icon="mdi-dots-vertical" size="small" variant="elevated">
             <v-icon></v-icon>
             <v-speed-dial :location="dialLocation" activator="parent" open-on-hover>
                 <v-btn @click="item.click && item.click()" v-for="(item, i) in dialActions" :key="i" :color="item.color"
                     :icon="item.icon" v-tooltip="{ location: tooltipLocation, text: $t(item.tooltip) }"></v-btn>
             </v-speed-dial>
         </v-btn>
+
     </v-app-bar>
 </template>
