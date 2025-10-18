@@ -1,6 +1,7 @@
 <script setup>
 import { shallowRef, toRef } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { useTheme } from 'vuetify'
 
 const collapse = shallowRef(false)
 const dialLocation = toRef(() => collapse.value ? 'right center' : 'bottom center');
@@ -9,14 +10,21 @@ const tooltipLocation = toRef(() => collapse.value ? 'bottom' : 'left');
 // Pega o estado reativo do idioma atual
 const { locale } = useI18n();
 
+const theme = useTheme();
+
+
 // Função pra alternar idioma
 const toggleLanguage = () => {
     locale.value = locale.value === 'pt' ? 'en' : 'pt'
 }
 
+const toggleTheme = () => {
+    theme.toggle();
+}
+
 const dialActions = [
     { color: 'indigo', icon: 'mdi-translate', tooltip: 'tooltip.language', click: toggleLanguage },
-    { color: 'grey-darken-4', icon: 'mdi-weather-night', tooltip: 'tooltip.darkMode' },
+    { color: 'grey-darken-4', icon: 'mdi-weather-night', tooltip: 'tooltip.darkMode', click: toggleTheme },
     { color: 'purple', icon: 'mdi-bank', tooltip: 'tooltip.selectBank' },
 ]
 
