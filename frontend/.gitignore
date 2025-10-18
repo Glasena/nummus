@@ -31,3 +31,6 @@ coverage
 
 # Arquivo para teste apenas
 server.json
+
+#Arquivo de configurações
+.env

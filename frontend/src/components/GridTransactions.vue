@@ -1,6 +1,7 @@
 <script setup>
 import axios from 'axios';
 import { onMounted, reactive } from 'vue';
+import api from "../services/axios";
 import { useRouter } from 'vue-router';
 
 const state = reactive({
@@ -16,7 +17,7 @@ const headers = [
 
 onMounted(async () => {
     try {
-        const response = await axios.get("http://localhost:5010/transactions");
+        const response = await api.get('/transactions');
         state.transactions = response.data
         console.log("Fetched transactions:", state.transactions);
     } catch (error) {
