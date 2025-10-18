@@ -4,5 +4,11 @@
     "language": "Linguagem",
     "darkMode": "Modo Noturno",
     "selectBank": "Selecionar Banco"
+  },
+  "gridTransactions": {
+    "id": "Id",
+    "description": "Descrição",
+    "value": "Valor",
+    "date": "Data"
   }
 }

@@ -1,19 +1,22 @@
 <script setup>
-import axios from 'axios';
-import { onMounted, reactive } from 'vue';
+import { onMounted, reactive, computed } from 'vue';
 import api from "../services/axios";
+import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
 const state = reactive({
     transactions: []
 });
 
-const headers = [
-    { title: 'ID', align: 'start', key: 'id' },
-    { title: 'Descrição', align: 'start', key: 'description' },
-    { title: 'Valor', align: 'start', key: 'value' },
-    { title: 'Data', align: 'start', key: 'date' }
-]
+// Pega o estado reativo do idioma atual
+const { t } = useI18n();
+
+const headers = computed(() => [
+    { title: t('gridTransactions.id'), align: 'start', key: 'id' },
+    { title: t('gridTransactions.description'), align: 'start', key: 'description' },
+    { title: t('gridTransactions.value'), align: 'start', key: 'value' },
+    { title: t('gridTransactions.date'), align: 'start', key: 'date' }
+]);
 
 onMounted(async () => {
     try {
