@@ -1,15 +1,11 @@
 <script setup>
-import { onMounted, reactive, computed } from 'vue';
-import api from "../services/axios";
+import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useRouter } from 'vue-router';
-
-const state = reactive({
-    transactions: []
-});
+import useTransactions from './useTransactions';
 
 // Pega o estado reativo do idioma atual
 const { t } = useI18n();
+const { state } = useTransactions();
 
 const headers = computed(() => [
     { title: t('gridTransactions.id'), align: 'start', key: 'id' },
@@ -17,16 +13,6 @@ const headers = computed(() => [
     { title: t('gridTransactions.value'), align: 'start', key: 'value' },
     { title: t('gridTransactions.date'), align: 'start', key: 'date' }
 ]);
-
-onMounted(async () => {
-    try {
-        const response = await api.get('/transactions');
-        state.transactions = response.data
-        console.log("Fetched transactions:", state.transactions);
-    } catch (error) {
-        console.error("Error fetching transactions:", error);
-    }
-});
 
 </script>
 <template>

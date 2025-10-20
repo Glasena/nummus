@@ -1,5 +1,5 @@
 <script setup>
-import GridTransactions from '@/components/GridTransactions.vue';
+import GridTransactions from '@/components/Grid/GridTransactions.vue';
 
 </script>
 <template>
