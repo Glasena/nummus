@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia';
-import dateUtils from '../Utils/dateUtils';
 
 export const useDashboardStore = defineStore('dashboard', {
 
@@ -7,12 +6,16 @@ export const useDashboardStore = defineStore('dashboard', {
     state() {
         return {
             referenceDate: new Date(),
+            bankId: "1"
         }
     },
     //Actions - métodos
     actions: {
         setLastDayReferenceDate(newDate) {
             this.referenceDate = newDate;
+        },
+        setBankId(bankId) {
+            this.bankId = bankId;
         }
     },
     //getters

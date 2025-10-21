@@ -12,7 +12,7 @@ const useTransactions = () => {
         transactions: []
     });
 
-    const getTransactions = async (referenceEndDate) => {
+    const getTransactions = async (referenceEndDate, bankId) => {
         try {
 
             //@todo - AJUSTAR REQ BACKEND
@@ -24,16 +24,19 @@ const useTransactions = () => {
             const start = new Date(dateUtils.getFirstDayOfMonth(referenceEndDate));
             const end = new Date(dateUtils.getLastDayOfMonth(referenceEndDate));
 
-            console.log(response, start, end);
-
             // 3️⃣ Filtra localmente (front-end)
             const filtered = response.data.filter((transaction) => {
                 const transactionDate = new Date(transaction.date);
                 return transactionDate >= start && transactionDate <= end;
             });
 
+            const filteredBank = filtered.filter((transaction) => {
+                return transaction.bank_id == bankId;
+            });
+
+
             // 4️⃣ Retorna apenas os filtrados
-            return filtered;
+            return filteredBank;
         } catch (error) {
             console.error('Error fetching transactions:', error);
         }
@@ -44,9 +47,9 @@ const useTransactions = () => {
     });
 
     watch(
-        () => dashboardStore.referenceDate,
+        () => [dashboardStore.referenceDate, dashboardStore.bankId],
         async () => {
-            state.transactions = await getTransactions(dashboardStore.referenceDate);
+            state.transactions = await getTransactions(dashboardStore.referenceDate, dashboardStore.bankId);
         }
     );
 

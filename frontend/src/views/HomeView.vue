@@ -3,5 +3,7 @@ import GridTransactions from '@/components/Grid/GridTransactions.vue';
 
 </script>
 <template>
-    <GridTransactions/>
+    <div class="pa-5">
+        <GridTransactions/>
+    </div>
 </template>

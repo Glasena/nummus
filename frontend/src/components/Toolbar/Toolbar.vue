@@ -1,17 +1,23 @@
 <script setup>
-import { shallowRef, toRef, watch, ref } from 'vue';
+import { shallowRef, toRef, watch, ref, reactive } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useTheme } from 'vuetify'
-import { useDashboardStore } from '../stores/useDashboardStore.js';
+import { useDashboardStore } from '../../stores/useDashboardStore.js';
+import useBanks from './useBanks.js';
 
 const collapse = shallowRef(false)
 const dialLocation = toRef(() => collapse.value ? 'right center' : 'bottom center');
 const tooltipLocation = toRef(() => collapse.value ? 'bottom' : 'left');
 const referenceDate = ref(new Date());
+const selectedBankId = ref(null); // Inicia como null ou 0
 const dashboardStore = useDashboardStore();
 
 // Pega o estado reativo do idioma atual
 const { locale } = useI18n();
+const { banks } = useBanks();
+console.log('banks', banks);
+console.log('banks.value', banks.value);
+
 const theme = useTheme();
 
 // Função pra alternar idioma
@@ -33,6 +39,21 @@ watch(referenceDate, (newDate, oldDate) => {
     dashboardStore.setLastDayReferenceDate(newDate);
 })
 
+// Este watch é disparado quando a lista 'banks' é carregada.
+watch(banks, (newBanks) => {
+    // newBanks é a lista completa de bancos.
+    if (newBanks && newBanks.length > 0 && selectedBankId.value === null) {
+        selectedBankId.value = newBanks[0].id;
+    }
+}, { immediate: true }); // { immediate: true } garante que se 'banks' já estiver carregado, ele executa na inicialização.
+
+watch(selectedBankId, (newBankId) => {
+
+    if (newBankId !== null && newBankId !== undefined) {
+        dashboardStore.setBankId(newBankId);
+    }
+}, { immediate: true });
+
 </script>
 
 <template>
@@ -42,6 +63,9 @@ watch(referenceDate, (newDate, oldDate) => {
         <v-toolbar-title>
             {{ $t('appTitle') }}
         </v-toolbar-title>
+
+        <v-select class="mr-4 align-self-center" :items="banks" item-title="description" item-value="id" label="Banco"
+            variant="solo" max-width="250px" hide-details="auto" v-model="selectedBankId" />
 
         <!-- @todo tradução / selecionar apenas mês e ano -->
         <v-date-input class="mr-4" max-width="250px" label="Date input" view-mode="months" variant="solo-filled"
