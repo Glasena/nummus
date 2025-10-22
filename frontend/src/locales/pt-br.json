@@ -9,6 +9,7 @@
     "id": "Id",
     "description": "Descrição",
     "value": "Valor",
-    "date": "Data"
+    "date": "Data",
+    "bankDescription": "Banco"
   }
 }

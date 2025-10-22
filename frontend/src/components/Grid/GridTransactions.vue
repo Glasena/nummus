@@ -9,6 +9,7 @@ const { state } = useTransactions();
 
 const headers = computed(() => [
     { title: t('gridTransactions.id'), align: 'start', key: 'id' },
+    { title: t('gridTransactions.bankDescription'), align: 'start', key: 'bank_description' },
     { title: t('gridTransactions.description'), align: 'start', key: 'description' },
     { title: t('gridTransactions.value'), align: 'start', key: 'value' },
     { title: t('gridTransactions.date'), align: 'start', key: 'date' }
